@@ -13,8 +13,8 @@ const Login = () => {
     e.preventDefault();
 
     const url = isAdmin
-      ? "http://localhost:4000/api/v1/admin/login"
-      : "http://localhost:4000/api/v1/user/login";
+      ? "https://feastify-6.onrender.com/api/v1/admin/login"
+      : "https://feastify-6.onrender.com/api/v1/user/login";
 
     try {
       const { data } = await axios.post(url, { email, password });
