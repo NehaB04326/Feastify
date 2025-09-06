@@ -1,7 +1,6 @@
 // backend/controllers/adminController.js
-
 import { Admin } from "../models/adminSchema.js";
-import Booking from "../models/bookingModel.js";  // import Booking model
+import { Reservation } from "../models/reservationSchema.js";  // use Reservation model
 
 // Register admin
 export const registerAdmin = async (req, res) => {
@@ -48,24 +47,12 @@ export const loginAdmin = async (req, res) => {
   }
 };
 
-// Get all bookings (for admin dashboard)
+// Get all reservations (for admin dashboard)
 export const getAllBookings = async (req, res) => {
   try {
-    const bookings = await Booking.find()
-      .populate("user", "email")    // populate user email only
-      .populate("room", "name");    // populate room name only
+    const reservations = await Reservation.find();
 
-    // Format bookings to send only relevant info
-    const formattedBookings = bookings.map((b) => ({
-      _id: b._id,
-      userEmail: b.user.email,
-      roomName: b.room.name,
-      checkInDate: b.checkInDate,
-      checkOutDate: b.checkOutDate,
-      status: b.status,
-    }));
-
-    res.status(200).json({ success: true, bookings: formattedBookings });
+    res.status(200).json({ success: true, bookings: reservations });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
   }
