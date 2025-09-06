@@ -17,12 +17,11 @@ const Reservation = () => {
   const handleReservation = async (e) => {
     e.preventDefault();
 
-   
     const token = localStorage.getItem("token");
 
     if (!token) {
       toast.error("Please login first to make a reservation.");
-      navigate("/login");  // redirect to login page
+      navigate("/login"); // redirect to login page
       return;
     }
 
@@ -41,7 +40,6 @@ const Reservation = () => {
 
       toast.success(data.message);
 
-      
       setFirstName("");
       setLastName("");
       setPhone("");

@@ -9,18 +9,23 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        const { data } = await axios.get("http://localhost:4000/api/v1/admin/bookings", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("adminToken")}`, // if using JWT auth
-          },
-        });
+        const { data } = await axios.get(
+          "http://localhost:4000/api/v1/admin/bookings",
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+            },
+          }
+        );
         if (data.success) {
           setBookings(data.bookings);
         } else {
-          toast.error("Failed to fetch bookings");
+          toast.error("Failed to fetch reservations");
         }
       } catch (error) {
-        toast.error(error.response?.data?.message || "Error fetching bookings");
+        toast.error(
+          error.response?.data?.message || "Error fetching reservations"
+        );
       } finally {
         setLoading(false);
       }
@@ -30,36 +35,40 @@ const AdminDashboard = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading bookings...</p>;
+    return <p>Loading reservations...</p>;
   }
 
   return (
     <div>
       <h1>Welcome to Admin Dashboard</h1>
-      <h2>All Bookings</h2>
+      <h2>All Reservations</h2>
       {bookings.length === 0 ? (
-        <p>No bookings found.</p>
+        <p>No reservations found.</p>
       ) : (
-        <table>
+        <table border="1" cellPadding="8">
           <thead>
             <tr>
-              <th>Booking ID</th>
-              <th>User</th>
-              <th>Room</th>
-              <th>Check-In</th>
-              <th>Check-Out</th>
-              <th>Status</th>
+              <th>Reservation ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Guests</th>
             </tr>
           </thead>
           <tbody>
-            {bookings.map((booking) => (
-              <tr key={booking._id}>
-                <td>{booking._id}</td>
-                <td>{booking.userEmail}</td> {/* or booking.user.name based on your schema */}
-                <td>{booking.roomName}</td> {/* adjust fields based on your booking schema */}
-                <td>{new Date(booking.checkInDate).toLocaleDateString()}</td>
-                <td>{new Date(booking.checkOutDate).toLocaleDateString()}</td>
-                <td>{booking.status}</td>
+            {bookings.map((res) => (
+              <tr key={res._id}>
+                <td>{res._id}</td>
+                <td>
+                  {res.firstName} {res.lastName}
+                </td>
+                <td>{res.email}</td>
+                <td>{res.phone}</td>
+                <td>{res.date}</td>
+                <td>{res.time}</td>
+                <td>{res.guests}</td>
               </tr>
             ))}
           </tbody>
