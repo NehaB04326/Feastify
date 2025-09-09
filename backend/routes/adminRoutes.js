@@ -3,7 +3,7 @@ import { registerAdmin, loginAdmin, getAllBookings } from "../controller/adminCo
 
 const router = express.Router();
 
-// Admin auth
+
 router.post("/register", registerAdmin);
 router.post("/login", loginAdmin);
 
