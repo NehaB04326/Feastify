@@ -6,6 +6,9 @@ export const isAuthenticated = async (req, res, next) => {
   try {
     // Get the Authorization header
     const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return next(new ErrorHandler("Please login to access this resource", 401));
+    }
  
 
     // Extract token string from 'Bearer <token>'
